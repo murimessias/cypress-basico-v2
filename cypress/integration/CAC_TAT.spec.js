@@ -1,6 +1,8 @@
 // <reference types="Cypress" />
 
 describe('Central de Atendimento ao Cliente TAT', () => {
+  const THREE_SECONDS_IN_MS = 3000
+
   // Aula 0
   beforeEach(() => {
     cy.visit('../src/index.html')
@@ -14,6 +16,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   // Aula 2
   it('preenche os campos obrigatórios e envia o formulário', () => {
+    cy.clock()
+
     cy.get('[id="firstName"]')
       .should('be.visible')
       .type('Murilo')
@@ -38,9 +42,16 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.success')
       .should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success')
+      .should('not.be.visible')
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.clock()
+
     cy.get('[id="firstName"]')
       .should('be.visible')
       .type('Murilo')
@@ -65,6 +76,11 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.error')
       .should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error')
+      .should('not.be.visible')
   })
 
   it('não preenche o campo de telefone com caracteres não numéricos', () => {
@@ -105,6 +121,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
+
     cy.get('[id="firstName"]')
       .should('be.visible')
       .type('Murilo')
@@ -134,22 +152,41 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.error')
       .should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error')
+      .should('not.be.visible')
   })
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+    cy.clock()
+
     cy.contains('button[type="submit"]', /enviar/i)
       .should('be.visible')
       .click()
 
     cy.get('.error')
       .should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error')
+      .should('not.be.visible')
   })
 
   it('envia o formuário com sucesso usando um comando customizado', () => {
+    cy.clock()
+
     cy.fillMandatoryFieldsAndSubmit()
 
     cy.get('.success')
       .should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success')
+      .should('not.be.visible')
   })
 
   // Aula 3
