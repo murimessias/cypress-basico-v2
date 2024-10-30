@@ -56,7 +56,7 @@ document.querySelector('button[type="submit"]')
   }, false)
 
 function showAndHideErrorMessage() {
-  const errorMessage = document.querySelector('.error-cypress')
+  const errorMessage = document.querySelector('.error')
   errorMessage.style.display = 'block'
   scroll(0, 0)
   hideMessageAfterTimeout(errorMessage)
